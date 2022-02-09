@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\PostCommentController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
@@ -16,9 +18,13 @@ use App\Http\Controllers\PostController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('posts/{post}', [PostController::class, 'show'])->name('post');
+Route::post('posts/{post:slug}/comments', [PostCommentController::class, 'store']);
+
+Route::post('newsletter', NewsletterController::class);
+
+
 Route::get('register', [RegisterController::class, 'index'])->name('register.index')->middleware('guest');
 Route::post('register', [RegisterController::class, 'store'])->name('register.store')->middleware('guest');;
 
