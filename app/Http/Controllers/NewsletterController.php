@@ -16,7 +16,8 @@ class NewsletterController extends Controller
      * @param Newsletter $newsletter
      * @return Application|RedirectResponse|Redirector
      */
-    public function __invoke(Newsletter $newsletter) {
+    public function __invoke(Newsletter $newsletter)
+    {
         request()->validate(['email' => 'required|email']);
 
         try {

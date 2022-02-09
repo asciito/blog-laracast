@@ -69,6 +69,11 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function getThumbnail()
+    {
+        return $this->thumbnail ? asset('storage/' . $this->thumbnail) : '/images/illustration-1.png';
+    }
+
     public function getRouteKeyName(): string
     {
         return 'slug';

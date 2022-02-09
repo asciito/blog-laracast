@@ -24,10 +24,12 @@ Route::post('posts/{post:slug}/comments', [PostCommentController::class, 'store'
 
 Route::post('newsletter', NewsletterController::class);
 
-
 Route::get('register', [RegisterController::class, 'index'])->name('register.index')->middleware('guest');
 Route::post('register', [RegisterController::class, 'store'])->name('register.store')->middleware('guest');;
 
 Route::get('login', [SessionController::class, 'index'])->middleware('guest');
 Route::post('login', [SessionController::class, 'create'])->middleware('guest');
 Route::post('logout', [SessionController::class, 'destroy'])->middleware('auth');
+
+Route::get('admin/posts/create', [PostController::class, 'create'])->middleware('admin');
+Route::post('admin/posts', [PostController::class, 'store'])->middleware('admin');

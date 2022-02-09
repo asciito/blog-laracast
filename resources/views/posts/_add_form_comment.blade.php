@@ -4,7 +4,7 @@
             @csrf
 
             <header class="flex items-center">
-                <img src="https://i.pravatar.cc/100?u={{ random_int(1, 100)  }}" class="rounded-full mr-4" width="50" height="50" alt="">
+                <img src="https://i.pravatar.cc/100?u={{ Auth::id() }}" class="rounded-full mr-4" width="50" height="50" alt="">
                 <h2>Want to participate?</h2>
             </header>
 
@@ -19,7 +19,7 @@
             @enderror
 
             <div class="flex justify-end border-t border-gray-200 mt-6 pt-6">
-                <button type="submit" class="bg-blue-500 bg-blue-600 text-white px-8 py-2 rounded-full">Post</button>
+                <x-submit-button>Post</x-submit-button>
             </div>
         </form>
     @else

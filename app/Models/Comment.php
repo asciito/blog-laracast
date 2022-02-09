@@ -12,10 +12,6 @@ class Comment extends Model
 
     protected $guarded = [];
 
-    protected $casts = [
-        'created_at' => 'date',
-    ];
-
     public function post(): BelongsTo
     {
         return $this->belongsTo(Post::class);
