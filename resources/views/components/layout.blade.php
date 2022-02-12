@@ -24,11 +24,20 @@
             <div class="mt-8 md:mt-0 flex">
                 @auth
                     <div class="flex items-center space-x-5">
-                        <span class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->name }}</span>
-                        <form action="/logout" method="POST" class="text-sm font-semibold text-blue-500">
-                            @csrf
-                            <button type="submit">Logout</button>
-                        </form>
+                        <x-dropdown>
+                            <x-slot name="trigger">
+                                <button class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->name }}</button>
+                            </x-slot>
+
+                            <x-dropdown-item href="/dashboard" :active="request()->is('dashboard')">Dashboard</x-dropdown-item>
+                            <x-dropdown-item href="/admin/posts/create" :active="request()->is('/admin/posts/create')">New post</x-dropdown-item>
+                            <x-dropdown-item href="#" @click.prevent="document.querySelector('#logout').submit()">Log Out</x-dropdown-item>
+
+                            <form id="logout" action="/logout" method="POST" hidden>
+                                @csrf
+                                <button type="submit">Logout</button>
+                            </form>
+                        </x-dropdown>
                     </div>
                 @else
                     <div class="flex items-center space-x-5">
@@ -43,7 +52,7 @@
             </div>
         </nav>
 
-        @yield('content')
+        {{ $slot }}
 
         <footer id="newsletter" class="bg-gray-100 border border-black border-opacity-5 rounded-xl text-center py-16 px-10 mt-16">
             <img src="/images/lary-newsletter-icon.svg" alt="" class="mx-auto -mb-6" style="width: 145px;">
