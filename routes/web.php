@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminPostController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PostCommentController;
 use App\Http\Controllers\RegisterController;
@@ -24,12 +25,14 @@ Route::post('posts/{post:slug}/comments', [PostCommentController::class, 'store'
 
 Route::post('newsletter', NewsletterController::class);
 
-Route::get('register', [RegisterController::class, 'index'])->name('register.index')->middleware('guest');
-Route::post('register', [RegisterController::class, 'store'])->name('register.store')->middleware('guest');;
+Route::middleware(['guest'])->group(function () {
+    Route::get('register', [RegisterController::class, 'index'])->name('register.index');
+    Route::post('register', [RegisterController::class, 'store'])->name('register.store');
 
-Route::get('login', [SessionController::class, 'index'])->middleware('guest');
-Route::post('login', [SessionController::class, 'create'])->middleware('guest');
+    Route::get('login', [SessionController::class, 'index']);
+    Route::post('login', [SessionController::class, 'create']);
+});
+
 Route::post('logout', [SessionController::class, 'destroy'])->middleware('auth');
 
-Route::get('admin/posts/create', [PostController::class, 'create'])->middleware('admin');
-Route::post('admin/posts', [PostController::class, 'store'])->middleware('admin');
+Route::resource('admin/posts', AdminPostController::class)->except('show')->middleware('can:admin');

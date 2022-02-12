@@ -6,6 +6,7 @@ use App\Services\MailchimpNewsletter;
 use App\Services\Newsletter;
 use Illuminate\Support\ServiceProvider;
 use MailchimpMarketing\ApiClient;
+use Illuminate\Support\Facades\Gate;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +34,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Gate::define('admin', function() {
+            return auth()->user()->email === 'test@test.com';
+        });
     }
 }
